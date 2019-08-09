@@ -1,0 +1,17 @@
+﻿<BSNavItem IsDropdown="true">
+    <BSDropdownToggle Color="Color.Light">@Items.Label</BSDropdownToggle>
+    <BSDropdownMenu>
+        @foreach (var item in Items.Children)
+        { 
+            if (item.Children.Count != 0)
+            {
+                <BSNavbarGeneratorSubItem Items="item" />
+            }
+        }
+    </BSDropdownMenu>
+</BSNavItem>
+
+@code
+{
+    [Parameter] internal BSNavbarItemsList Items { get; set; } = new BSNavbarItemsList();
+}

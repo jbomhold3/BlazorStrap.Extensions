@@ -1,0 +1,18 @@
+﻿@inherits CodeBSNavbarGenerator
+
+    <BSNav IsList="true" Class="mr-auto" IsNavbar="true">
+        @foreach (var item in Items.GetItems.First().Children)
+        {
+            if (item.Children.Count != 0)
+            {
+                <BSNavbarGeneratorSubItem Items="item" />
+            }
+            else
+            {
+                <BSNavItem>
+                    <BSNavLink Href="@item.Link">@item.Label</BSNavLink>
+                </BSNavItem>
+            }
+        }
+    </BSNav>
+
