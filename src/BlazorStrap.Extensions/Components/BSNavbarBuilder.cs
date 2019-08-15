@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-#nullable enable
-namespace BlazorStrap.Extensions.Components
+
+//#nullable enable
+namespace BlazorStrap.Extensions
 {
     public class BSNavbarBuilder
     {
@@ -13,26 +14,40 @@ namespace BlazorStrap.Extensions.Components
         public BSNavbarBuilder()
         {
             var item = new BSNavbarItemsList();
+            item.Children = new List<BSNavbarItemsList>();
             _navbarItems.Add(item);
             _lastId.Add(item.Id);
         }
-        public BSNavbarBuilder AddItem(string Label = "", string Icon = "", string Link = "", bool External = false, bool IconToRight = false, bool IconOnly = false)
+        public BSNavbarBuilder AddItem(string Label = "", string Icon = "", string Link = "", BlazorStrap.Color Color = BlazorStrap.Color.Light, bool IconToRight = false, bool IconOnly = false)
         {
             var item = new BSNavbarItemsList()
             {
                 Label = Label,
                 Icon = Icon,
                 Link = Link,
-                External = External,
+                Color = Color,
                 IconToRight = IconToRight,
                 IconOnly = IconOnly,
                 Children = new List<BSNavbarItemsList>()
             };
-            var parent = _navbarItems.First(q => q.Id == _lastId[_lastId.Count - 1]);
-            parent.Children.Add(item);
+            _lastSetId = item.Id;
+            AddChild(item, _navbarItems.First());
+            //var parent = _navbarItems.First(q => q.Id == _lastId[_lastId.Count - 1]);
+            //   parent.Children.Add(item);
             return this;
         }
 
+        public void AddChild(BSNavbarItemsList item, BSNavbarItemsList parent)
+        {
+            if(parent.Id == _lastId.Last())
+            {
+                parent.Children.Add(item);
+            }
+            else
+            {
+                AddChild(item, parent.Children.Last());
+            }
+        }
         public BSNavbarBuilder StartSubMenu()
         {
             _lastId.Add(_lastSetId);
@@ -50,7 +65,7 @@ namespace BlazorStrap.Extensions.Components
         public string Label { get; set; }
         public string Icon { get; set; }
         public string Link { get; set; }
-        public bool External  { get; set; }
+        public BlazorStrap.Color Color  { get; set; }
         public bool IconToRight { get; set; }
         public bool IconOnly { get; set; }
         public List<BSNavbarItemsList> Children { get; set; }

@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BlazorStrap;
 using System.Threading.Tasks;
 using BlazorComponentUtilities;
-using BlazorStrap.Util;
-using BlazorStrap;
+
 using Microsoft.AspNetCore.Components;
 using Toolbelt.Blazor.SpeechRecognition;
 
 namespace BlazorStrap.Extensions
 {
-    public class CodeBSSpeechInput : CodeBSInput , IDisposable
+    public class CodeBSSpeechInput : BSBasicInput , IDisposable
     {
         [Parameter]
         internal string Lable { get; set; }
@@ -94,7 +94,7 @@ namespace BlazorStrap.Extensions
         {
             this.Value = string.Join(" ", args.Results.Select(e => e.Items[0].Transcript));
             isRunning = false;
-            this.StateHasChanged();
+            StateHasChanged();
         }
 
         public virtual void Dispose()

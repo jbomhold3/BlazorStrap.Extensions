@@ -1,11 +1,30 @@
-﻿<BSNavItem IsDropdown="true">
-    <BSDropdownToggle Color="Color.Light">@Items.Label</BSDropdownToggle>
+﻿@namespace BlazorStrap.Extensions
+<BSNavItem IsDropdown="true">
+    @if (Child)
+    {
+        <BSDropdownToggle style="text-align:left;padding:.25rem 2.5rem .25rem 1.5rem" Color="Items.Color">@Items.Label</BSDropdownToggle>
+    }
+    else
+    {
+        <BSDropdownToggle Color="Items.Color">@Items.Label</BSDropdownToggle>
+    }
     <BSDropdownMenu>
         @foreach (var item in Items.Children)
-        { 
+        {
             if (item.Children.Count != 0)
             {
-                <BSNavbarGeneratorSubItem Items="item" />
+                <BSNavbarGeneratorSubItem Items="item" Child="true" />
+            }
+            else
+            {
+                @if (item.IconToRight)
+                {
+                    <BSDropdownItem Href="@item.Link"><i class="@item.Icon"></i><span> @(item.IconOnly ? null : item.Label)</span></BSDropdownItem>
+                }
+                else
+                {
+                    <BSDropdownItem Href="@item.Link"><span>@(item.IconOnly ? null : item.Label) </span><i class="@item.Icon"></i></BSDropdownItem>
+                }
             }
         }
     </BSDropdownMenu>
@@ -14,4 +33,5 @@
 @code
 {
     [Parameter] internal BSNavbarItemsList Items { get; set; } = new BSNavbarItemsList();
+    [Parameter] private bool Child { get; set; }
 }

@@ -1,18 +1,26 @@
 ﻿@inherits CodeBSNavbarGenerator
+@namespace BlazorStrap.Extensions
 
-    <BSNav IsList="true" Class="mr-auto" IsNavbar="true">
-        @foreach (var item in Items.GetItems.First().Children)
+<BSNav IsList="true" Class="mr-auto" IsNavbar="true">
+    @foreach (var item in Items.GetItems.First().Children)
+    {
+        if (item.Children.Count != 0)
         {
-            if (item.Children.Count != 0)
-            {
-                <BSNavbarGeneratorSubItem Items="item" />
-            }
-            else
-            {
-                <BSNavItem>
-                    <BSNavLink Href="@item.Link">@item.Label</BSNavLink>
-                </BSNavItem>
-            }
+            <BSNavbarGeneratorSubItem Items="item" />
         }
-    </BSNav>
-
+        else
+        {
+            <BSNavItem>
+                @if (item.IconToRight)
+                {
+                    <BSNavLink Href="@item.Link"><i class="@item.Icon"></i><span> @(item.IconOnly ? null : item.Label)</span></BSNavLink>
+                }
+                else
+                {
+                   <BSNavLink Href="@item.Link"><span>@(item.IconOnly ? null : item.Label) </span><i class="@item.Icon"></i></BSNavLink>
+                }
+            </BSNavItem>
+        }
+    }
+    
+</BSNav>

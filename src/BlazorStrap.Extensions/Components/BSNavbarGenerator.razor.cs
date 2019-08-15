@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System;
 
-namespace BlazorStrap.Extensions.Components
+namespace BlazorStrap.Extensions
 {
     public partial class CodeBSNavbarGenerator : ComponentBase
     {

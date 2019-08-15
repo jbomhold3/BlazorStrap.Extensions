@@ -1,0 +1,37 @@
+﻿@page "/navbargen"
+
+    <BSNavbar IsExpand="true" IsDark="false" Color="Color.Light">
+        <BSNavbarGenerator Items="Navbar" />
+    </BSNavbar>
+@code
+{
+    BSNavbarBuilder Navbar = new BSNavbarBuilder();
+
+    protected override Task OnInitAsync()
+    {
+        Navbar
+            .AddItem(Label: "Code", Link: "test", Icon:"mic-icon")
+            .AddItem(Label: "Pull Requests", Icon:"mic-icon")
+            .StartSubMenu()
+            .AddItem(Label: "PR 123", Link: "test")
+                .StartSubMenu()
+                .AddItem(Label: "Fix a typo", Link: "test")
+                .AddItem(Label: "Add new sweet feature")
+                    .StartSubMenu()
+                    .AddItem(Label: "Unlimited", Link: "test")
+                    .AddItem(Label: "Sub", Link: "test")
+                    .AddItem(Label: "Menus", Link: "test")
+                    .EndSubMenu()
+                .AddItem(Label: "Bugs fix", Link: "test")
+                .EndSubMenu()
+            .AddItem(Label: "PR 124", Link: "test")
+            .AddItem(Label: "PR 125", Link: "test")
+            .EndSubMenu()
+            .AddItem(Label: "Projects", Link: "test")
+            .AddItem(Label: "Security", Link: "test")
+            .AddItem(Label: "Insights", Link: "test")
+            .AddItem(Label: "Settings", Link: "test");
+
+        return base.OnInitAsync();
+    }
+}
